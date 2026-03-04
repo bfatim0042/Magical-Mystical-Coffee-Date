@@ -5,12 +5,44 @@ import copy
 import os
 #bea's branch
 
+#https://learndataanalysis.org/google-py-file-source-code/
+#pip install gspread google-auth
+#username: coffeeprojectgroup1@gmail.com
+#password: CoffeeCoffeeCoffee
+#form link: https://docs.google.com/forms/d/e/1FAIpQLSfTtx1Zv_239qeMjlAAfU8BOABsQGbILvXG9_RGsnLRJbB_BQ/viewform?usp=dialog
+
+import gspread
+import csv
+from google.oauth2.service_account import Credentials
+
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
+
+creds = Credentials.from_service_account_file("coffeekey.json", scopes=SCOPES)
+
+client = gspread.authorize(creds)
+
+sheet = client.open_by_key("1_3pTBJ4FE_9h_2rRM-5GXTPmuSc4UESqrP-Z3Fx3ZxU").sheet1
+
+data = sheet.get_all_records()
+
+with open("participants.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerow(["Your name:", "Your email address:"])
+
+    for row in data:
+        writer.writerow([row["Your name:"], row["Your email address:"]])
+
+print("participants.csv created successfully.")
+
 # path to the CSV files with participant data
-participants_csv = "Coffee Partner Lottery participants.csv"
+participants_csv = "participants.csv"
 
 # header names in the CSV file (name and e-mail of participants)
 header_name = "Your name:"
-header_email = "Your e-mail:"
+header_email = "Your email address:"
 
 # path to TXT file that stores the pairings of this round
 new_pairs_txt = "Coffee Partner Lottery new pairs.txt"
