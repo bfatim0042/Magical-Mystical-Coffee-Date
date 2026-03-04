@@ -5,7 +5,11 @@ import copy
 import os
 #bea's branch
 
+#resources:
 #https://learndataanalysis.org/google-py-file-source-code/
+#https://github.com/burnash/gspread
+#https://aryanirani123.medium.com/read-and-write-data-in-google-sheets-using-python-and-the-google-sheets-api-6e206a242f20
+
 #pip install gspread google-auth
 
 #Created a Google Account for the project to make a form/sheet
@@ -17,7 +21,20 @@ import gspread
 import csv
 from google.oauth2.service_account import Credentials
 
-# path to the CSV files with participant data
+#required scopes 
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
+
+#key created by API, authorizing
+creds = Credentials.from_service_account_file("coffeekey.json", scopes=SCOPES)
+client = gspread.authorize(creds)
+
+#created a google sheet with entries and shared with the api email, inputting link to sheet
+sheet = client.open_by_key("1_3pTBJ4FE_9h_2rRM-5GXTPmuSc4UESqrP-Z3Fx3ZxU").sheet1
+
+#path to the CSV files with participant data
 participants_csv = "Coffee Partner Lottery participants.csv"
 
 # header names in the CSV file (name and e-mail of participants)
