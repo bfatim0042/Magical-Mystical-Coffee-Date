@@ -5,37 +5,40 @@ import random
 import copy
 import os
 
+#https://learndataanalysis.org/google-py-file-source-code/
+#pip install gspread google-auth
+#username: coffeeprojectgroup1@gmail.com
+#password: CoffeeCoffeeCoffee
+#form link: https://docs.google.com/forms/d/e/1FAIpQLSfTtx1Zv_239qeMjlAAfU8BOABsQGbILvXG9_RGsnLRJbB_BQ/viewform?usp=dialog
 
 #libraries to handle API
 import gspread
 from google.oauth2.service_account import Credentials
 
-def create_pairings(): 
-    SCOPES = [
-        "https://www.googleapis.com/auth/spreadsheets",
-        "https://www.googleapis.com/auth/drive"
-    ]
-    #Place the service account JSON key in the project directory as key.json.
-    #Instructions to download the key are in the documentation 
-    creds = Credentials.from_service_account_file("key.json", scopes=SCOPES)
-    client = gspread.authorize(creds)
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
 
-    #Opening the sheet attached to the Google Form responses 
-    sheet = client.open_by_key("1_3pTBJ4FE_9h_2rRM-5GXTPmuSc4UESqrP-Z3Fx3ZxU").sheet1
+creds = Credentials.from_service_account_file("coffeekey.json", scopes=SCOPES)
 
-    #Put entries into variable named data
-    data = sheet.get_all_records()
+client = gspread.authorize(creds)
 
-    #Copy sheets data into the participants csv, creating correct headers, etc
-    with open("participants.csv", "w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(["Your name:", "Your email address:"])
+sheet = client.open_by_key("1_3pTBJ4FE_9h_2rRM-5GXTPmuSc4UESqrP-Z3Fx3ZxU").sheet1
 
-        for row in data:
-            writer.writerow([row["Your name:"], row["Your email address:"]])
+data = sheet.get_all_records()
 
-    #Path to the CSV files with participant data
-    participants_csv = "participants.csv"
+with open("participants.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerow(["Your name:", "Your email address:"])
+
+    for row in data:
+        writer.writerow([row["Your name:"], row["Your email address:"]])
+
+print("participants.csv created successfully.")
+
+# path to the CSV files with participant data
+participants_csv = "participants.csv"
 
     #Header names in the CSV file (name and e-mail of participants)
     header_name = "Your name:"
