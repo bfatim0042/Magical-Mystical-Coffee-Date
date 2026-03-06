@@ -9,11 +9,7 @@ https://aryanirani123.medium.com/read-and-write-data-in-google-sheets-using-pyth
 The instructions to run are as follows:
 1. Make sure the correct modules are installed by executing this in terminal: pip install gspread google-auth
 
-2. Attached to the project is a file labeled key.json. The JSON key must also be placed in the same folder as the source code. 
-If for some reason it does not work, a new JSON code can be created by logging into the google account created for this project - 
-
-username: coffeeprojectgroup1@gmail.com
-password: CoffeeCoffeeCoffee
+2. Attached to the project submission is a file labeled key.json. The JSON key must also be placed in the same folder as the source code. If for some reason it does not work, a new JSON code can be created by logging into the google account created for this project (included in final writeup).
 
 Then, access the Google Cloud console, and go to Menu -> APIs & Services -> Credentials -> Create Credentials.
 A new JSON key will be autodownloaded. Rename this as key.json and keep in the source code folder.
