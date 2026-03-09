@@ -50,51 +50,87 @@ npairs = set()
 # running set of participants
 nparticipants = copy.deepcopy(participants)
 
+# set maximum group size to *half* of amount of participants
+maximumGSize = float.__floor__(len(nparticipants) / 2)
+
+while True:
+    choise = int(input("Do you want random group sizes (0) or choose manually (1)? "))
+    if choise == 0:
+        gsize = random.randint(2, maximumGSize)
+        print(f"Creating groups of {gsize}...")
+
+    elif choise == 1:
+        # ask for group sizes between 2 and maximum group size
+        gsize = int(input(f"  How many participants should be paired together?\n  Input full number between 2 and {maximumGSize}: "))
+        # check for valid input
+        if gsize < 2 or gsize > maximumGSize:
+            print("This is not a valid input. Please choose again.")
+            continue
+
+    else:
+        print("This is not a valid input. Please choose again.")
+        continue
+
+    break
+
 # Boolean flag to check if new pairing has been found
 new_pairs_found = False
 
+def createGroup(newParticipants, groupSize):
+    participant = random.choice(newParticipants)
+    newParticipants.remove(participant)
+    if groupSize < 2:
+        return [participant]
+    else:
+        return [participant] + createGroup(newParticipants, groupSize - 1)
+
 # try creating new pairing until successful
 while not new_pairs_found:   # to do: add a maximum number of tries
-  
-    # if odd number of participants, create one triple, then pairs
-    if len(participants)%2 != 0:
-        
-        # take three random participants from list of participants
-        p1 = random.choice(nparticipants)
-        nparticipants.remove(p1)
-    
-        p2 = random.choice(nparticipants)
-        nparticipants.remove(p2)
-        
-        p3 = random.choice(nparticipants)
-        nparticipants.remove(p3)
-        
-        # create alphabetically sorted list of participants
-        plist = [p1, p2, p3]
-        plist.sort()
-                        
-        # add alphabetically sorted list to set of pairs
-        npairs.add(tuple(plist))
 
-  
+    remainder = len(participants) % gsize
+    # if odd number of participants
+    if remainder != 0:
+        quotient = len(participants) // gsize
+
+        # try creating groups of other sizes for the amount of possible groups + 1
+        for i in range(quotient + 1):
+            # if even groups can be created, end loop
+            if remainder <= 0:
+                break
+
+            # if at last loop, just put all remaining people in a group
+            if i == quotient:
+                plist = createGroup(nparticipants, remainder)
+
+            # else if remainder is big enough just put all in 1 group
+            elif remainder > gsize / 2:
+                plist = createGroup(nparticipants, remainder)
+                remainder = 0
+            # else if remainder is even add 2 to group size
+            elif remainder % 2 == 0:
+                plist = createGroup(nparticipants, gsize + 2)
+                remainder -= 2
+            # or just 1
+            else:
+                plist = createGroup(nparticipants, gsize + 1)
+                remainder -= 1
+            
+            # whatever group is created, sort it
+            plist.sort()
+                            
+            # add alphabetically sorted list to set of pairs
+            npairs.add(tuple(plist))
+
     # while still participants left to pair...
     while len(nparticipants) > 0:
 
-        # take two random participants from list of participants
-        p1 = random.choice(nparticipants)
-        nparticipants.remove(p1)
-    
-        p2 = random.choice(nparticipants)
-        nparticipants.remove(p2)
-                
         # create alphabetically sorted list of participants
-        plist = [p1, p2]
+        plist = createGroup(nparticipants, gsize)
         plist.sort()
-                        
+
         # add alphabetically sorted list to set of pairs
         npairs.add(tuple(plist))
 
- 
     # check if all new pairs are indeed new, else reset
     if npairs.isdisjoint(opairs):
         new_pairs_found = True
