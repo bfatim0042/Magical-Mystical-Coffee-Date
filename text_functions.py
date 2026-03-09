@@ -34,6 +34,7 @@ import asyncio
 from pingram import Pingram
 
 import os
+#pip install dotenv
 from dotenv import load_dotenv
 # load api variable
 load_dotenv()
@@ -64,7 +65,7 @@ async def send_email(email, name, ice_breaker):
                     
                 {ice_breaker}
                 
-                Tahnk you again for participating! /n
+                Thank you again for participating! /n
                 
                 We wish you the best in the coffee hang out with the rest of your team!/n
                 
@@ -79,7 +80,7 @@ async def send_email(email, name, ice_breaker):
             }
         })
 
-asyncio.run(send_email())
+#asyncio.run(send_email())
       
         
 name1="Ice_breaker_round_1"
@@ -137,10 +138,5 @@ elif random_ice_breaker==7:
     print_text_file(name7)
     ice_breaker_n=comment_ice_breaker7
 
-
-group=[0,1]
-group_len=group_len(group)
-print(f"There are {group_len} participants in this group")
-
-for email in range(group):
-    email_participant=send_email(email, name_part, ice_breaker_n)
+#for email in range(participants):
+    #email_participant=send_email(email, name_part, ice_breaker_n)
