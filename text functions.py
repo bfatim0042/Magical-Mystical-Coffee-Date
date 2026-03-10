@@ -246,20 +246,20 @@ async def send_email(email, name, ice_breaker):
             "email": {
                 "subject": "Weekly Coffee Partner Lottery",
 #\033[1m and \033[0m open and closes bold text respectively
-                "html": f"""<h1>Welcome to the Weekly Coffee Partner Lottery \033[1m{name}\033[0m !</
-                h1><p>Thanks for joining our Weekly Coffee Partner Lottery. /n
-                It is a pleasure to have you with us.
+                "html": f"""<h1>Welcome to the Weekly Coffee Partner Lottery <b>{name} !<br></
+                h1><p>Thanks for joining our Weekly Coffee Partner Lottery.<br>
+                It is a pleasure to have you with us.<br>
 
-                As every week, you have been assigned to a group for an \033[1minformal coffee meeting\033[0m./n
-                Here is the \033[1mice breaker\033[0m of the week:
+                As every week, you have been assigned to a group for an <b>informal coffee meeting<\b>.<br>
+                Here is the <b>ice breaker</b> of the week:<br>
                     
-                {ice_breaker}
+                {ice_breaker}<br>
                 
-                Tahnk you again for participating! /n
+                Thank you again for participating!<br> 
                 
-                We wish you the best in the coffee hang out with the rest of your team!/n
+                We wish you the best in the coffee hang out with the rest of your team!<br>
                 
-                Best,
+                Best,<br>
                 Bea, Markus, Fatih and Lucía
                 
                  </p>
