@@ -27,6 +27,25 @@ def print_text_file(file):
 def group_len(group):
           g_size=len(group)
           return g_size
+
+#function that creates a personalized message for each participant
+def welcome_message(a, participant_list, name,ice_breaker):
+    for a in participant_list:
+        return (f"""<h1>Welcome to the Weekly Coffee Partner Lottery \033[1m{name}\033[0m !</
+        h1><p>Thanks for joining our Weekly Coffee Partner Lottery. /n
+        It is a pleasure to have you with us.
+
+        As every week, you have been assigned to a group for an \033[1minformal coffee meeting\033[0m./n
+        Here is the \033[1mice breaker\033[0m of the week:
+            
+        {ice_breaker}
+        
+        Tahnk you again for participating! /n
+        
+        We wish you the best in the coffee hang out with the rest of your team!/n
+        
+        Best,
+        Bea, Markus, Fatih and Lucía""")
       
 #install first
 #pip install pingram-python
@@ -110,37 +129,42 @@ name7="Ice_breaker_round_7"
 comment_ice_breaker7="Talk about:\nDo you have any games on your phone? \n\nIf so, which ones and why you like them? \n\nIf not, why not?"
 writting=create_text_file(name7, comment_ice_breaker7)
 
-import random
-random_ice_breaker=random.randint(1,7)
-print(f"The random ice breaker of this round is:\n{random_ice_breaker}\n")
+def random_ice_breaker():
+    import random
+    random_ice_breaker=random.randint(1,7)
+    print(f"The random ice breaker of this round is:\n{random_ice_breaker}\n")
+    
+    #Print the random ice_breaker
+    if random_ice_breaker==1:
+        print_text_file(name1)
+        ice_breaker_n=comment_ice_breaker1
+    elif random_ice_breaker==2:
+        print_text_file(name2)
+        ice_breaker_n=comment_ice_breaker2
+    elif random_ice_breaker==3:
+        print_text_file(name3)
+        ice_breaker_n=comment_ice_breaker3
+    elif random_ice_breaker==4:
+        print_text_file(name4)
+        ice_breaker_n=comment_ice_breaker4
+    elif random_ice_breaker==5:
+        print_text_file(name5)
+        ice_breaker_n=comment_ice_breaker5
+    elif random_ice_breaker==6:
+        print_text_file(name6)
+        ice_breaker_n=comment_ice_breaker6
+    elif random_ice_breaker==7:
+        print_text_file(name7)
+        ice_breaker_n=comment_ice_breaker7
+    return ice_breaker_n
 
-#Print the random ice_breaker
-if random_ice_breaker==1:
-    print_text_file(name1)
-    ice_breaker_n=comment_ice_breaker1
-elif random_ice_breaker==2:
-    print_text_file(name2)
-    ice_breaker_n=comment_ice_breaker2
-elif random_ice_breaker==3:
-    print_text_file(name3)
-    ice_breaker_n=comment_ice_breaker3
-elif random_ice_breaker==4:
-    print_text_file(name4)
-    ice_breaker_n=comment_ice_breaker4
-elif random_ice_breaker==5:
-    print_text_file(name5)
-    ice_breaker_n=comment_ice_breaker5
-elif random_ice_breaker==6:
-    print_text_file(name6)
-    ice_breaker_n=comment_ice_breaker6
-elif random_ice_breaker==7:
-    print_text_file(name7)
-    ice_breaker_n=comment_ice_breaker7
+round_ice_breaker=random_ice_breaker()
+#determine the groups and how many participants are there in it
 
-
-group=[0,1]
-group_len=group_len(group)
-print(f"There are {group_len} participants in this group")
-
-for email in range(group):
-    email_participant=send_email(email, name_part, ice_breaker_n)
+#generate individual messages
+for header_name in participants:
+    welcome_participants = welcome_message(header_name)
+    create_text_file(header_name,welcome_participants)
+#send emails to all participants greeting them, and the ice_breaker
+    email_participant=send_email(header_email, header_name, ice_breaker_n)
+print("Emails with the ice breaker succesfully sent to participants!")
