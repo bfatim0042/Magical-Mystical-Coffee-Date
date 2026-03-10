@@ -29,31 +29,29 @@ def group_len(group):
           return g_size
 
 #function that creates a personalized message for each participant
-def welcome_message(a, participant_list, name,ice_breaker):
-    for a in participant_list:
-        return (f"""<h1>Welcome to the Weekly Coffee Partner Lottery \033[1m{name}\033[0m !</
-        h1><p>Thanks for joining our Weekly Coffee Partner Lottery. /n
-        It is a pleasure to have you with us.
+def welcome_message(name,ice_breaker):
+        return (f"""Welcome to the Weekly Coffee Partner Lottery {name}!\n
+Thanks for joining our Weekly Coffee Partner Lottery.\n
+It is a pleasure to have you with us.\n
 
-        As every week, you have been assigned to a group for an \033[1minformal coffee meeting\033[0m./n
-        Here is the \033[1mice breaker\033[0m of the week:
+As every week, you have been assigned to a group for an informal coffee meeting.\n
+Here is the ice breaker of the week:\n
             
-        {ice_breaker}
+        {ice_breaker}\n
         
-        Tahnk you again for participating! /n
+Thank you again for participating!\n 
         
-        We wish you the best in the coffee hang out with the rest of your team!/n
+We wish you the best in the coffee hang out with the rest of your team!\n
         
-        Best,
-        Bea, Markus, Fatih and Lucía""")
-      
+Best,\n
+Bea, Markus, Fatih and Lucía
+        """)
 #install first
 #pip install pingram-python
 import asyncio
 from pingram import Pingram
 
 import os
-#pip install dotenv
 from dotenv import load_dotenv
 # load api variable
 load_dotenv()
@@ -74,21 +72,21 @@ async def send_email(email, name, ice_breaker):
             },
             "email": {
                 "subject": "Weekly Coffee Partner Lottery",
-#\033[1m and \033[0m open and closes bold text respectively
-                "html": f"""<h1>Welcome to the Weekly Coffee Partner Lottery \033[1m{name}\033[0m !</
-                h1><p>Thanks for joining our Weekly Coffee Partner Lottery. /n
-                It is a pleasure to have you with us.
+#<b> and <\b> open and closes bold text respectively (in html)
+                "html": f"""<h1>Welcome to the Weekly Coffee Partner Lottery <b>{name} !<br></
+                h1><p>Thanks for joining our Weekly Coffee Partner Lottery.<br>
+                It is a pleasure to have you with us.<br>
 
-                As every week, you have been assigned to a group for an \033[1minformal coffee meeting\033[0m./n
-                Here is the \033[1mice breaker\033[0m of the week:
+                As every week, you have been assigned to a group for an <b>informal coffee meeting<\b>.<br>
+                Here is the <b>ice breaker</b> of the week:<br>
                     
-                {ice_breaker}
+                {ice_breaker}<br>
                 
-                Thank you again for participating! /n
+                Thank you again for participating!<br> 
                 
-                We wish you the best in the coffee hang out with the rest of your team!/n
+                We wish you the best in the coffee hang out with the rest of your team!<br>
                 
-                Best,
+                Best,<br>
                 Bea, Markus, Fatih and Lucía
                 
                  </p>
@@ -99,7 +97,7 @@ async def send_email(email, name, ice_breaker):
             }
         })
 
-#asyncio.run(send_email())
+asyncio.run(send_email())
       
         
 name1="Ice_breaker_round_1"
@@ -162,12 +160,11 @@ def random_ice_breaker():
 round_ice_breaker=random_ice_breaker()
 #determine the groups and how many participants are there in it
 
-#for email in range(participants):
-    #email_participant=send_email(email, name_part, ice_breaker_n)
 #generate individual messages
 for header_name in participants:
-    welcome_participants = welcome_message(header_name)
+    print(header_name, header_email)
+    welcome_participants = welcome_message(header_name, round_ice_breaker)
     create_text_file(header_name,welcome_participants)
 #send emails to all participants greeting them, and the ice_breaker
-    email_participant=send_email(header_email, header_name, ice_breaker_n)
+    email_participant=send_email(header_email, header_name, round_ice_breaker)
 print("Emails with the ice breaker succesfully sent to participants!")
