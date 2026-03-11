@@ -11,7 +11,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 #importing email functions
-from text_functions import random_ice_breaker, send_email
+from text_functions import random_ice_breaker, send_email, create_text_file, welcome_message
 import asyncio
 
 def create_pairings():
@@ -250,8 +250,10 @@ def create_pairings():
         for email in group:
             name = formdata[formdata[header_email] == email].iloc[0][header_name]
             partners = []
+            welcome_participants = welcome_message(name, ice_breaker)
+            create_text_file(name,welcome_participants)
 
-#making a list of the partners for the email
+        #making a list of the partners for the email
             for member in group:
                 if member != email:
                     partner_name = formdata[formdata[header_email] == member].iloc[0][header_name]
@@ -259,6 +261,7 @@ def create_pairings():
 
             allpartners = ", ".join(partners)
             asyncio.run(send_email(email, name + " | Partner(s): " + allpartners, ice_breaker))
+
 
     print("Emails successfully sent to participants!")
 
